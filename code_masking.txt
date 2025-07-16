@@ -1,0 +1,66 @@
+///////////////////////////////////////////////////////////////
+// ****** MASKING 4 PLANETSCOPE IMAGES WITH 4 UDM2 FILES ****** //
+///////////////////////////////////////////////////////////////
+
+// ===================== LOAD IMAGES AND UDM2 =====================
+
+print('=== Loading 4 PlanetScope Images and 4 UDM2 Files ===');
+
+var images = [
+  {
+    image: ee.Image('projects/ee-putuwirabumi/assets/PSSD_Bawean'),
+    udm: ee.Image('projects/plasma-matter-439103-a9/assets/20250428_030916_41_24f7_3B_udm2_clip')
+  },
+  {
+    image: ee.Image('projects/ee-putuwirabumi/assets/PSSD_Bawean'),
+    udm: ee.Image('projects/plasma-matter-439103-a9/assets/20250428_030918_65_24f7_3B_udm2_clip')
+  },
+  {
+    image: ee.Image('projects/ee-putuwirabumi/assets/PSSD_Bawean'),
+    udm: ee.Image('projects/plasma-matter-439103-a9/assets/20250428_031740_16_2538_3B_udm2_clip')
+  },
+  {
+    image: ee.Image('projects/ee-putuwirabumi/assets/PSSD_Bawean'),
+    udm: ee.Image('projects/plasma-matter-439103-a9/assets/20250428_031742_53_2538_3B_udm2_clip')
+  }
+];
+
+// ===================== MASKING FUNCTION =====================
+
+function maskWithUDM(entry) {
+  var clearMask = entry.udm.select('b1').eq(1); // Planet: clear == 1
+  return entry.image.updateMask(clearMask);
+}
+
+// ===================== MASKING PROCESS =====================
+
+var maskedImages = images.map(maskWithUDM);
+
+// Create an image collection from the masked results
+var imageCollection = ee.ImageCollection(maskedImages);
+
+// ===================== COMPOSITE =====================
+
+var composite = imageCollection.median(); // or .mosaic()
+
+// ===================== VISUALIZATION =====================
+
+Map.centerObject(composite, 12);
+Map.addLayer(composite, {
+  bands: ['b3', 'b2', 'b1'], // RGB
+  min: 0,
+  max: 3000,
+  gamma: 1.2
+}, 'Composite of 4 Masked Images');
+
+// ===================== EXPORT RESULT =====================
+
+Export.image.toDrive({
+  image: composite,
+  description: 'PlanetScope_Composite_Masked_4Image',
+  folder: 'GEE_PlanetScope',
+  region: composite.geometry(),  // or replace with a specific AOI
+  scale: 3,
+  maxPixels: 1e13,
+  fileFormat: 'GeoTIFF'
+});
