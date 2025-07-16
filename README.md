@@ -1,6 +1,3 @@
-# Cloud-Free-PlanetScope-Composite-using-UDM2-Masks
-Google Earth Engine script for masking PlanetScope imagery using UDM2 files and generating a cloud-free composite from 4 scenes.
-
 # PlanetScope Image Masking with UDM2 in Google Earth Engine
 
 This repository contains a Google Earth Engine (GEE) script to **mask 4 PlanetScope images** using their corresponding **UDM2 quality masks** and generate a clean, cloud-free composite image.
