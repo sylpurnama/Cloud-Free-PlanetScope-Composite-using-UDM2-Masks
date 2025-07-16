@@ -46,6 +46,15 @@ Modify asset paths (ee.Image('projects/...')) if needed
 Click Run to visualize and export
 
 
+### 🌈 Image Before Masking  
+The original PlanetScope image, before applying the UDM2 cloud mask. Cloudy and hazy areas are still visible.  
+![False Color Composite](https://github.com/sylpurnama/Cloud-Free-PlanetScope-Composite-using-UDM2-Masks/blob/main/img%20before.png)
+
+### 🗺️ Image After Masking (Cloud-Free Composite)  
+The final composite image after applying UDM2 masks to remove clouds and unusable pixels.  
+![LULC Classification](https://github.com/sylpurnama/Cloud-Free-PlanetScope-Composite-using-UDM2-Masks/blob/main/img%20after.png)
+
+
 ## 📂 Output
 A cloud-free RGB composite image from 4 masked PlanetScope scenes
 
