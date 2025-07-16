@@ -29,13 +29,15 @@ PlanetScope imagery often comes with **UDM2 (Unusable Data Mask)** files that in
    }
 
    var clearMask = udm.select('b1').eq(1);
-image.updateMask(clearMask);
+   image.updateMask(clearMask);
 
-var composite = imageCollection.median();
+   var composite = imageCollection.median();
 
-Map.addLayer(composite, {bands: ['b3', 'b2', 'b1'], ...});
+   Map.addLayer(composite, {bands: ['b3', 'b2', 'b1'], ...});
 
-Export.image.toDrive({...});
+   Export.image.toDrive({...});
+
+   
 
 ## ▶️ How to Run
 Go to Google Earth Engine Code Editor
@@ -46,15 +48,18 @@ Modify asset paths (ee.Image('projects/...')) if needed
 
 Click Run to visualize and export
 
+
 ## 📂 Output
 A cloud-free RGB composite image from 4 masked PlanetScope scenes
 
 Exported as a GeoTIFF at 3-meter resolution
 
+
 ## 📋 Notes
 Make sure you have access to the PlanetScope image and UDM2 assets in your GEE account.
 
 UDM2 files must include a b1 band indicating clear pixels (1 = clear).
+
 
 ## 📜 License
 This project is licensed under the MIT License. See LICENSE for details.
